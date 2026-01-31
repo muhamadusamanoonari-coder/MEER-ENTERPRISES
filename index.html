@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEER ENTERPRISES | Software House Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); }
+        .hero-gradient { background: radial-gradient(ellipse at top right, #eff6ff, #ffffff, #ffffff); }
+        .transition-slow { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-700">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-600 p-2 rounded-xl text-white">
+                    <i data-lucide="code"></i>
+                </div>
+                <span class="text-2xl font-bold tracking-tight text-slate-900">
+                    MEER <span class="text-blue-600">ENTERPRISES</span>
+                </span>
+            </div>
+            <div class="hidden md:flex gap-10 font-medium text-sm items-center">
+                <a href="#home" class="hover:text-blue-600 transition-colors">Home</a>
+                <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
+                <a href="#services" class="hover:text-blue-600 transition-colors">Services</a>
+                <a href="#projects" class="hover:text-blue-600 transition-colors">Work</a>
+                <a href="#contact" class="bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition-all shadow-md">Get Started</a>
+            </div>
+            <button class="md:hidden text-slate-600" onclick="toggleMenu()">
+                <i data-lucide="menu" id="menu-icon" size="28"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-white flex flex-col items-center justify-center gap-8 text-2xl font-bold">
+            <button class="absolute top-6 right-6" onclick="toggleMenu()"><i data-lucide="x" size="32"></i></button>
+            <a href="#home" onclick="toggleMenu()">Home</a>
+            <a href="#about" onclick="toggleMenu()">About Us</a>
+            <a href="#services" onclick="toggleMenu()">Services</a>
+            <a href="#projects" onclick="toggleMenu()">Work</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-40 pb-24 px-6 hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="lg:w-1/2 space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide uppercase">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> Software Excellence
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-[1.1]">
+                    We Build <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Smart Software</span> Solutions.
+                </h1>
+                <p class="text-xl text-slate-600 max-w-xl leading-relaxed">
+                    MEER ENTERPRISES is a top-tier software house providing web development and custom digital solutions for modern restaurants, marts, gyms, and retail shops.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#contact" class="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-blue-600/20 group">
+                        Contact Us <i data-lucide="chevron-right" class="group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#projects" class="bg-white border-2 border-slate-100 hover:border-blue-100 px-8 py-4 rounded-2xl font-bold text-slate-700 transition-all shadow-sm">
+                        View Our Work
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2 relative">
+                <div class="absolute -z-10 bg-blue-400/10 w-[600px] h-[600px] rounded-full blur-[100px] -top-40 -right-20"></div>
+                <div class="relative p-4 md:p-8 bg-white border border-slate-200 rounded-[2.5rem] shadow-2xl">
+                    <div class="flex items-center gap-2 mb-6 border-b border-slate-100 pb-4">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                        <div class="ml-4 text-xs font-mono text-slate-400">meer-enterprises-dashboard.v1</div>
+                    </div>
+                    <div class="grid grid-cols-6 gap-4">
+                        <div class="col-span-4 h-12 bg-slate-50 rounded-xl"></div>
+                        <div class="col-span-2 h-12 bg-blue-600 rounded-xl"></div>
+                        <div class="col-span-3 h-32 bg-slate-50 rounded-xl"></div>
+                        <div class="col-span-3 h-32 bg-indigo-50 rounded-xl"></div>
+                        <div class="col-span-6 h-48 bg-slate-900 rounded-2xl p-6 relative overflow-hidden">
+                            <div class="h-4 w-1/3 bg-slate-700 rounded mb-4"></div>
+                            <div class="h-2 w-full bg-slate-800 rounded mb-2"></div>
+                            <div class="h-2 w-5/6 bg-slate-800 rounded mb-2"></div>
+                            <div class="h-2 w-4/6 bg-slate-800 rounded"></div>
+                            <div class="mt-8 flex gap-2">
+                                <div class="w-8 h-8 rounded-lg bg-blue-600"></div>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-600"></div>
+                                <div class="w-8 h-8 rounded-lg bg-indigo-600"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section id="about" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div class="space-y-6 order-2 lg:order-1">
+                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Our Story</h2>
+                <h3 class="text-4xl md:text-5xl font-extrabold text-slate-900">A Growing Force in <span class="text-blue-600">Digital Solutions</span></h3>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    MEER ENTERPRISES is an evolving software house committed to building professional, business-focused technology. Our team of 10–15 expert developers specializes in modern stacks, ensuring every product is scalable, secure, and fast.
+                </p>
+                <p class="text-slate-500">
+                    We leverage the power of the <strong>MERN Stack (MongoDB, Express, React, Node.js)</strong> to deliver software that doesn't just work—it excels in the competitive market.
+                </p>
+                <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl border border-slate-100 transition-slow hover:shadow-lg">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-white text-xl font-bold">MU</div>
+                    <div>
+                        <p class="font-bold text-xl text-slate-900">Muhammad Usama</p>
+                        <p class="text-blue-600 font-medium">Founder & Lead MERN Stack Developer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative order-1 lg:order-2 h-full min-h-[400px]">
+                <div class="aspect-square bg-blue-600 rounded-[3rem] p-10 flex flex-col justify-end text-white relative overflow-hidden h-full shadow-2xl">
+                    <div class="absolute top-10 left-10 text-9xl font-black text-white/10 select-none">15+</div>
+                    <div class="space-y-2 relative z-10">
+                        <p class="text-4xl font-bold">Talented Engineers</p>
+                        <p class="text-blue-200">Building the future of business management software across Pakistan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 space-y-4">
+                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Capabilities</h2>
+                <p class="text-4xl md:text-5xl font-black text-slate-900">Our Professional Services</p>
+                <p class="text-slate-500 max-w-2xl mx-auto text-lg">Comprehensive technology solutions tailored to your business vertical.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 1 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="monitor"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Website Development</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">High-performance MERN stack and Next.js applications.</p>
+                </div>
+                <!-- 2 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="layers"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Custom Software</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Bespoke digital solutions designed for your specific business.</p>
+                </div>
+                <!-- 3 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Restaurant POS</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Smart management for dining, billing, and kitchen ops.</p>
+                </div>
+                <!-- 4 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="shopping-cart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mart & Shop Software</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Optimized inventory tracking for retail marts.</p>
+                </div>
+                <!-- 5 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Gym Management</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Member tracking, attendance, and fee management.</p>
+                </div>
+                <!-- 6 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-pink-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Accounts & Inventory</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Precise financial record-keeping and stock monitoring.</p>
+                </div>
+                <!-- 7 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="pen-tool"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">UI/UX Design</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Modern, user-centric interfaces designed for conversion.</p>
+                </div>
+                <!-- 8 -->
+                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-slate-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="settings"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Maintenance</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Ongoing 24/7 technical assistance and software updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (All 7 Projects) -->
+    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div class="space-y-4">
+                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Portfolio</h2>
+                <p class="text-4xl md:text-5xl font-black text-slate-900">Our Successful Deployments</p>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- P1 -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-blue-600">Latest / POS</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Sanober Restaurant</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">A premium management platform for fine dining and table reservations.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">POS</span>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">MERN</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P2 -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-indigo-600">Web Development</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Burger Blast</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Interactive food ordering platform with a seamless UI/UX experience.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">REACT</span>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">FOOD TECH</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P3 -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-emerald-600">Software</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Dropure Filter Shop</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Accounts and inventory management system for water purification shops.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">INVENTORY</span>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">ACCOUNTS</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P4 -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-purple-600">Management Software</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Gym Management System</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">End-to-end automation for fitness centers and member management portal.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">SAAS</span>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">ADMIN</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P5 -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-pink-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-pink-600">Utility Web</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Family Manager App</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">A digital organization tool for managing complex household tasks.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">UTILITY</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P6 -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-orange-600">Enterprise</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Restaurant POS System</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">High-speed billing and kitchen management for busy food outlets.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">POS</span>
+                    </div>
+                </div>
+            </div>
+            <!-- P7 (Newest) -->
+            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col lg:col-start-2">
+                <div class="h-48 bg-slate-100 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-slate-600/10 to-transparent"></div>
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-slate-600">Retail</div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Shop Management System</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">General retail software for sales, stock, and staff management.</p>
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">SALES</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-24 px-6 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-8">
+                    <h2 class="text-blue-400 font-bold tracking-widest uppercase text-sm">Value Proposition</h2>
+                    <p class="text-4xl md:text-5xl font-black">Why Choose <span class="text-blue-500">Meer</span> Enterprises?</p>
+                    <p class="text-slate-400 text-lg leading-relaxed">
+                        We blend technical mastery with deep business insight to deliver software that doesn't just look good, but works as hard as you do.
+                    </p>
+                    <div class="space-y-6 pt-4">
+                        <div class="flex gap-4 items-start group">
+                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i data-lucide="zap" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl">Business-Oriented Solutions</h4>
+                                <p class="text-slate-400 text-sm mt-1">We build tools that directly grow your revenue and efficiency.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start group">
+                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i data-lucide="cpu" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl">Modern Technologies</h4>
+                                <p class="text-slate-400 text-sm mt-1">Leveraging MERN stack and AI for future-proof applications.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start group">
+                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i data-lucide="message-square" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl">Reliable Support</h4>
+                                <p class="text-slate-400 text-sm mt-1">Our team of 15+ experts provides dedicated 24/7 assistance.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start group">
+                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl">Clean & Secure Code</h4>
+                                <p class="text-slate-400 text-sm mt-1">Industry-standard security and highly maintainable architecture.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-[3rem] p-12 aspect-square flex flex-col justify-center items-center text-center shadow-2xl">
+                        <div class="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20">
+                            <p class="text-6xl font-black mb-2">99%</p>
+                            <p class="text-blue-100 font-bold uppercase tracking-wider">Client Satisfaction</p>
+                        </div>
+                        <div class="mt-12 grid grid-cols-2 gap-8 w-full">
+                            <div class="text-center border-r border-white/10">
+                                <p class="text-3xl font-bold">50+</p>
+                                <p class="text-blue-200 text-[10px] uppercase font-bold mt-1 tracking-widest">Projects Done</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-3xl font-bold">24/7</p>
+                                <p class="text-blue-200 text-[10px] uppercase font-bold mt-1 tracking-widest">Support</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="bg-slate-50 rounded-[3rem] p-8 md:p-16 border border-slate-100 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+            
+            <div class="grid lg:grid-cols-2 gap-16 relative z-10">
+                <div class="space-y-8">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900">Let's Build Something <span class="text-blue-600">Great</span></h2>
+                    <p class="text-slate-600 text-lg">Ready to automate your shop or launch your next web project? Our team is standing by.</p>
+                    
+                    <div class="space-y-6">
+                        <a href="mailto:muhammadusamaenterprises@gmail.com" class="flex items-center gap-5 p-6 bg-white rounded-3xl border border-slate-100 hover:border-blue-200 transition-slow shadow-sm group">
+                            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i data-lucide="mail"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">Send an Email</p>
+                                <p class="text-lg font-bold text-slate-900">muhammadusamaenterprises@gmail.com</p>
+                            </div>
+                        </a>
+                        <div class="flex items-center gap-5 p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
+                            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
+                                <i data-lucide="phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">Contact Sales</p>
+                                <p class="text-lg font-bold text-slate-900">+92 319 7921318</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <form class="space-y-6" onsubmit="event.preventDefault();">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
+                                <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="John Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email</label>
+                                <input type="email" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="john@company.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Project Category</label>
+                            <select class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all appearance-none cursor-pointer">
+                                <option>Mart/Shop POS Software</option>
+                                <option>Restaurant Management</option>
+                                <option>MERN Stack Website</option>
+                                <option>Gym Management</option>
+                                <option>Custom Software</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Your Message</label>
+                            <textarea class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 h-32 focus:outline-none focus:border-blue-500 focus:bg-white transition-all resize-none" placeholder="Tell us about your requirements..."></textarea>
+                        </div>
+                        <button class="w-full bg-blue-600 hover:bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2">
+                            Launch Project <i data-lucide="zap" size="18"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-24 pb-12 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-12 border-b border-slate-100 pb-16 mb-12 text-center md:text-left">
+            <div class="col-span-2 space-y-6">
+                <div class="flex items-center justify-center md:justify-start gap-2">
+                    <div class="bg-blue-600 p-1.5 rounded-lg text-white">
+                        <i data-lucide="code" size="16"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-slate-900">
+                        MEER <span class="text-blue-600">ENTERPRISES</span>
+                    </span>
+                </div>
+                <p class="text-slate-500 max-w-sm mx-auto md:mx-0">Building smart, scalable, and secure software solutions for businesses in Hyderabad and beyond.</p>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-black uppercase tracking-widest text-[10px] text-slate-900">Contact</h4>
+                <ul class="space-y-4 text-slate-500 text-sm">
+                    <li>Hyderabad, Sindh, PK</li>
+                    <li>+92 319 7921318</li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-black uppercase tracking-widest text-[10px] text-slate-900">Legal</h4>
+                <ul class="space-y-4 text-slate-500 text-sm font-bold uppercase tracking-widest text-[10px]">
+                    <li><a href="#" class="hover:text-blue-600 transition-colors">Privacy</a></li>
+                    <li><a href="#" class="hover:text-blue-600 transition-colors">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+            <p>&copy; 2026 MEER Enterprises. Built by Muhammad Usama.</p>
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2"><i data-lucide="check-circle" size="14" class="text-emerald-500"></i> Secure</span>
+                <span class="flex items-center gap-2"><i data-lucide="check-circle" size="14" class="text-emerald-500"></i> Scalable</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass', 'shadow-sm', 'py-3');
+                navbar.classList.remove('py-5');
+            } else {
+                navbar.classList.remove('glass', 'shadow-sm', 'py-3');
+                navbar.classList.add('py-5');
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
