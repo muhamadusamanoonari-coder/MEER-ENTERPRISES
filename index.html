@@ -1,101 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEER ENTERPRISES | Software House Solutions</title>
-    <link rel="icon" href="E:\ChatGPT Image Jan 31, 2026, 07_18_49 PM.png">
+    <title>MEER ENTERPRISES | AI & Software Solutions</title>
+    <link rel="icon" href="E:\ChatGPT Image Jan 31, 2026, 07_18_49 PM.png" type="image/png">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); }
-        .hero-gradient { background: radial-gradient(ellipse at top right, #eff6ff, #ffffff, #ffffff); }
-        .transition-slow { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        
+        /* Glassmorphism */
+        .glass { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* Custom Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        /* Tech Stack Marquee */
+        .marquee-container { overflow: hidden; white-space: nowrap; }
+        .marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Chatbot Animations */
+        @keyframes message-pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .message-anim { animation: message-pop 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-700">
+<body class="bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/923197921318" target="_blank" class="fixed bottom-6 right-6 z-[60] bg-[#25D366] hover:bg-[#20bd5a] text-white p-3.5 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center group">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+    </a>
+
+    <!-- Floating AI Chat Widget -->
+    <div id="ai-widget-container" class="fixed bottom-24 right-6 z-[60] flex flex-col items-end gap-4">
+        <!-- Chat Window (Hidden by default) -->
+        <div id="chat-window" class="hidden w-[350px] h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden origin-bottom-right transition-all duration-300">
+            <!-- Header -->
+            <div class="bg-slate-900 p-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                        <i data-lucide="bot" size="18"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm">Meer AI Assistant</h4>
+                        <p class="text-[10px] text-blue-200 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> Online</p>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="text-slate-400 hover:text-white"><i data-lucide="x" size="18"></i></button>
+            </div>
+            
+            <!-- Messages Area -->
+            <div id="chat-messages" class="flex-1 bg-slate-50 p-4 overflow-y-auto space-y-4">
+                <!-- Welcome Message -->
+                <div class="flex gap-2 message-anim">
+                    <div class="w-6 h-6 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-[10px] mt-1"><i data-lucide="bot" size="12"></i></div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-sm text-slate-600 shadow-sm">
+                        Hello! I'm Meer's AI Assistant. Ask me about our <b>Services</b>, <b>Founder</b>, or <b>Projects</b>!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-3 bg-white border-t border-slate-100">
+                <form onsubmit="handleChat(event)" class="flex gap-2">
+                    <input type="text" id="chat-input" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="Type a question..." autocomplete="off">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl transition-colors">
+                        <i data-lucide="send" size="16"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button onclick="toggleChat()" class="bg-slate-900 hover:bg-blue-600 text-white p-3.5 rounded-full shadow-xl transition-all hover:scale-110 group relative">
+            <i data-lucide="sparkles" size="24"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Ask AI</span>
+        </button>
+    </div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="bg-blue-600 p-2 rounded-xl text-white">
-                    <i data-lucide="code"></i>
-                </div>
-                <span class="text-2xl font-bold tracking-tight text-slate-900">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <!-- Main Logo Integration -->
+                <img src="E:\ChatGPT Image Jan 31, 2026, 07_18_49 PM.png" alt="Meer Enterprises Logo" class="h-12 w-auto object-contain drop-shadow-sm">
+                <span class="text-xl md:text-2xl font-bold tracking-tight text-slate-900 hidden sm:block">
                     MEER <span class="text-blue-600">ENTERPRISES</span>
                 </span>
             </div>
-            <div class="hidden md:flex gap-10 font-medium text-sm items-center">
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-8 font-medium text-sm items-center text-slate-600">
                 <a href="#home" class="hover:text-blue-600 transition-colors">Home</a>
-                <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
-                <a href="#services" class="hover:text-blue-600 transition-colors">Services</a>
-                <a href="#projects" class="hover:text-blue-600 transition-colors">Work</a>
-                <a href="#contact" class="bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition-all shadow-md">Get Started</a>
+                <a href="#about" class="hover:text-blue-600 transition-colors">Profile</a>
+                <a href="#services" class="hover:text-blue-600 transition-colors">Expertise</a>
+                <a href="#projects" class="hover:text-blue-600 transition-colors">Portfolio</a>
+                <a href="#contact" class="bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition-all shadow-lg hover:shadow-blue-600/25 transform hover:-translate-y-0.5">
+                    Start Project
+                </a>
             </div>
-            <button class="md:hidden text-slate-600" onclick="toggleMenu()">
-                <i data-lucide="menu" id="menu-icon" size="28"></i>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-slate-900 p-2" onclick="toggleMenu()">
+                <i data-lucide="menu" size="28"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-white flex flex-col items-center justify-center gap-8 text-2xl font-bold">
-            <button class="absolute top-6 right-6" onclick="toggleMenu()"><i data-lucide="x" size="32"></i></button>
-            <a href="#home" onclick="toggleMenu()">Home</a>
-            <a href="#about" onclick="toggleMenu()">About Us</a>
-            <a href="#services" onclick="toggleMenu()">Services</a>
-            <a href="#projects" onclick="toggleMenu()">Work</a>
-            <a href="#contact" onclick="toggleMenu()">Contact</a>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-white/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-2xl font-bold transition-all">
+            <button class="absolute top-6 right-6 p-2 bg-slate-100 rounded-full text-slate-600" onclick="toggleMenu()">
+                <i data-lucide="x" size="28"></i>
+            </button>
+            <a href="#home" onclick="toggleMenu()" class="hover:text-blue-600">Home</a>
+            <a href="#about" onclick="toggleMenu()" class="hover:text-blue-600">Profile</a>
+            <a href="#services" onclick="toggleMenu()" class="hover:text-blue-600">Services</a>
+            <a href="#projects" onclick="toggleMenu()" class="hover:text-blue-600">Portfolio</a>
+            <a href="#contact" onclick="toggleMenu()" class="text-blue-600">Contact Now</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-40 pb-24 px-6 hero-gradient overflow-hidden">
+    <section id="home" class="relative pt-32 pb-20 px-6 overflow-hidden min-h-screen flex items-center">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-100/50 rounded-full blur-3xl -z-10 translate-x-1/3 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-3xl -z-10 -translate-x-1/4 translate-y-1/4"></div>
+
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-            <div class="lg:w-1/2 space-y-8">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide uppercase">
-                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> Software Excellence
+            <div class="lg:w-1/2 space-y-8 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold tracking-wide uppercase shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Available for AI & Web Projects
                 </div>
-                <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-[1.1]">
-                    We Build <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Smart Software</span> Solutions.
+                
+                <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight">
+                    Where AI Meets <br>
+                    <span class="text-gradient">Human Innovation.</span>
                 </h1>
-                <p class="text-xl text-slate-600 max-w-xl leading-relaxed">
-                    MEER ENTERPRISES is a top-tier software house providing web development and custom digital solutions for modern restaurants, marts, gyms, and retail shops.
+                
+                <p class="text-lg md:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    Led by <strong>Muhammad Usama Noonari</strong>, a visionary AI Engineer and Full Stack Architect. We bridge the gap between complex data science and scalable SaaS solutions.
                 </p>
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <a href="#contact" class="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 rounded-2xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-blue-600/20 group">
-                        Contact Us <i data-lucide="chevron-right" class="group-hover:translate-x-1 transition-transform"></i>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                    <a href="#contact" class="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-xl shadow-blue-600/30 hover:-translate-y-1 group">
+                        Consult Now <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                     </a>
-                    <a href="#projects" class="bg-white border-2 border-slate-100 hover:border-blue-100 px-8 py-4 rounded-2xl font-bold text-slate-700 transition-all shadow-sm">
-                        View Our Work
+                    <a href="#projects" class="bg-white border-2 border-slate-200 hover:border-blue-600 hover:text-blue-600 px-8 py-4 rounded-2xl font-bold text-slate-700 transition-all shadow-sm hover:shadow-lg flex items-center justify-center gap-2">
+                        View Signature Projects
                     </a>
                 </div>
-            </div>
-            <div class="lg:w-1/2 relative">
-                <div class="absolute -z-10 bg-blue-400/10 w-[600px] h-[600px] rounded-full blur-[100px] -top-40 -right-20"></div>
-                <div class="relative p-4 md:p-8 bg-white border border-slate-200 rounded-[2.5rem] shadow-2xl">
-                    <div class="flex items-center gap-2 mb-6 border-b border-slate-100 pb-4">
-                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                        <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                        <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
-                        <div class="ml-4 text-xs font-mono text-slate-400">meer-enterprises-dashboard.v1</div>
+
+                <!-- Stats -->
+                <div class="pt-8 flex items-center justify-center lg:justify-start gap-8 opacity-80">
+                    <div class="flex flex-col">
+                        <span class="text-3xl font-black text-slate-900">20+</span>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Scalable Apps</span>
                     </div>
-                    <div class="grid grid-cols-6 gap-4">
-                        <div class="col-span-4 h-12 bg-slate-50 rounded-xl"></div>
-                        <div class="col-span-2 h-12 bg-blue-600 rounded-xl"></div>
-                        <div class="col-span-3 h-32 bg-slate-50 rounded-xl"></div>
-                        <div class="col-span-3 h-32 bg-indigo-50 rounded-xl"></div>
-                        <div class="col-span-6 h-48 bg-slate-900 rounded-2xl p-6 relative overflow-hidden">
-                            <div class="h-4 w-1/3 bg-slate-700 rounded mb-4"></div>
-                            <div class="h-2 w-full bg-slate-800 rounded mb-2"></div>
-                            <div class="h-2 w-5/6 bg-slate-800 rounded mb-2"></div>
-                            <div class="h-2 w-4/6 bg-slate-800 rounded"></div>
-                            <div class="mt-8 flex gap-2">
-                                <div class="w-8 h-8 rounded-lg bg-blue-600"></div>
-                                <div class="w-8 h-8 rounded-lg bg-emerald-600"></div>
-                                <div class="w-8 h-8 rounded-lg bg-indigo-600"></div>
+                    <div class="w-px h-10 bg-slate-300"></div>
+                    <div class="flex flex-col">
+                        <span class="text-3xl font-black text-slate-900">40%</span>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Waste Reduction</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image/Graphic - Using the Generated JPG -->
+            <div class="lg:w-1/2 relative perspective-1000" data-aos="fade-left" data-aos-duration="1200">
+                <div class="relative animate-float group">
+                    <!-- Main Image Card -->
+                    <div class="bg-white rounded-[2.5rem] p-3 shadow-2xl border border-slate-100 relative z-10 rotate-y-12 rotate-x-6 transform transition-transform group-hover:rotate-0 duration-700">
+                        <div class="rounded-[2rem] overflow-hidden relative aspect-[4/3] bg-slate-900">
+                            <img src="E:\img.jpg" alt="Meer Enterprises Tech" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
+                            
+                            <!-- Overlay Content -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent flex flex-col justify-end p-8">
+                                <div class="font-mono text-xs text-blue-300 mb-2 opacity-70">
+                                    > system_status: <span class="text-green-400">online</span><br>
+                                    > ai_model: <span class="text-purple-400">active</span>
+                                </div>
+                                <h3 class="text-white text-xl font-bold">Future-Ready Architecture</h3>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Elements -->
+                    <div class="absolute -right-4 top-10 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 animate-bounce flex items-center gap-3 z-20">
+                        <div class="bg-purple-100 p-2 rounded-full text-purple-600"><i data-lucide="brain-circuit" size="20"></i></div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-bold uppercase">AI Engine</p>
+                            <p class="text-sm font-bold text-slate-900">Neural Networks</p>
+                        </div>
+                    </div>
+
+                    <div class="absolute -left-8 bottom-20 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 animate-pulse flex items-center gap-3 z-20">
+                        <div class="bg-blue-100 p-2 rounded-full text-blue-600"><i data-lucide="shield-check" size="20"></i></div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-bold uppercase">Security</p>
+                            <p class="text-sm font-bold text-slate-900">Computer Vision</p>
                         </div>
                     </div>
                 </div>
@@ -103,295 +242,323 @@
         </div>
     </section>
 
-    <!-- About Us -->
+    <!-- Tech Stack Marquee -->
+    <div class="bg-slate-900 py-10 border-y border-slate-800 relative overflow-hidden">
+        <div class="marquee-container flex">
+            <div class="marquee-content flex items-center gap-16 px-8 text-slate-400 font-bold text-xl uppercase tracking-widest">
+                <span><i data-lucide="file-code-2" class="inline mb-1 text-yellow-400"></i> Python</span>
+                <span><i data-lucide="database" class="inline mb-1 text-green-500"></i> Django</span>
+                <span><i data-lucide="brain" class="inline mb-1 text-purple-400"></i> Scikit-Learn</span>
+                <span><i data-lucide="eye" class="inline mb-1 text-red-500"></i> OpenCV</span>
+                <span><i data-lucide="atom" class="inline mb-1 text-blue-400"></i> React.js</span>
+                <span><i data-lucide="bar-chart-3" class="inline mb-1 text-pink-500"></i> Pandas</span>
+                <span><i data-lucide="cpu" class="inline mb-1 text-green-600"></i> Node.js</span>
+                <!-- Duplicate -->
+                <span><i data-lucide="file-code-2" class="inline mb-1 text-yellow-400"></i> Python</span>
+                <span><i data-lucide="database" class="inline mb-1 text-green-500"></i> Django</span>
+                <span><i data-lucide="brain" class="inline mb-1 text-purple-400"></i> Scikit-Learn</span>
+                <span><i data-lucide="eye" class="inline mb-1 text-red-500"></i> OpenCV</span>
+                <span><i data-lucide="atom" class="inline mb-1 text-blue-400"></i> React.js</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Profile -->
     <section id="about" class="py-24 px-6 max-w-7xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-            <div class="space-y-6 order-2 lg:order-1">
-                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Our Story</h2>
-                <h3 class="text-4xl md:text-5xl font-extrabold text-slate-900">A Growing Force in <span class="text-blue-600">Digital Solutions</span></h3>
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="order-2 lg:order-1 relative">
+                <div class="absolute inset-0 bg-blue-600 rounded-[2.5rem] rotate-3 opacity-10"></div>
+                <div class="bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-xl relative z-10" data-aos="fade-up">
+                    <div class="flex items-center gap-6 mb-8">
+                        <div class="relative">
+                            <div class="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-blue-600 to-purple-600">
+                                <!-- Placeholder for your image -->
+                                <img src="E:\img.jpg" alt="Muhammad Usama Noonari" class="w-full h-full object-cover rounded-full border-4 border-white">
+                            </div>
+                            <div class="absolute bottom-0 right-0 bg-blue-600 text-white p-1.5 rounded-full border-2 border-white">
+                                <i data-lucide="badge-check" size="14"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900">Muhammad Usama Noonari</h3>
+                            <p class="text-blue-600 font-medium">Founder | AI Engineer | Architect</p>
+                            <p class="text-slate-400 text-xs mt-1 uppercase tracking-wider">Hyderabad, Sindh</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center gap-3 text-sm text-slate-600">
+                            <i data-lucide="graduation-cap" class="text-blue-600" size="18"></i>
+                            <span>FSc Pre-Engineering, Govt. College University</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-600">
+                            <i data-lucide="award" class="text-blue-600" size="18"></i>
+                            <span>Cisco Certified: Python & JavaScript Essentials</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-600">
+                            <i data-lucide="code" class="text-blue-600" size="18"></i>
+                            <span>Hackathon Participant: Coding Night 2025</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-bold uppercase">Data Science</span>
+                        <span class="px-3 py-1 rounded-lg bg-purple-50 text-purple-700 text-xs font-bold uppercase">Computer Vision</span>
+                        <span class="px-3 py-1 rounded-lg bg-green-50 text-green-700 text-xs font-bold uppercase">SaaS Architecture</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="order-1 lg:order-2 space-y-6" data-aos="fade-left">
+                <span class="text-blue-600 font-bold tracking-widest uppercase text-sm flex items-center gap-2">
+                    <span class="w-8 h-px bg-blue-600"></span> Executive Profile
+                </span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900">Visionary Founder & <br><span class="text-gradient">Data Scientist</span></h2>
                 <p class="text-lg text-slate-600 leading-relaxed">
-                    MEER ENTERPRISES is an evolving software house committed to building professional, business-focused technology. Our team of 10–15 expert developers specializes in modern stacks, ensuring every product is scalable, secure, and fast.
+                    A visionary software founder with a proven track record of deploying <strong>20+ scalable applications</strong>. Expert in bridging the gap between Humanitarian Logistics (Rizq-Chain) and Business Intelligence (SolarSmart).
                 </p>
-                <p class="text-slate-500">
-                    We leverage the power of the <strong>MERN Stack (MongoDB, Express, React, Node.js)</strong> to deliver software that doesn't just work—it excels in the competitive market.
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    Passionate about leveraging <strong>Python (AI/ML)</strong> and Modern Web Frameworks to solve complex operational problems. Currently scaling a social enterprise to reduce food waste in Sindh while delivering predictive analytics solutions for corporate clients.
                 </p>
-                <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl border border-slate-100 transition-slow hover:shadow-lg">
-                    <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-white text-xl font-bold">MU</div>
-                    <div>
-                        <p class="font-bold text-xl text-slate-900">Muhammad Usama</p>
-                        <p class="text-blue-600 font-medium">Founder & Lead MERN Stack Developer</p>
+                
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-900 mb-1">Humanitarian Tech</h4>
+                        <p class="text-xs text-slate-500">Optimizing logistics for social good.</p>
                     </div>
-                </div>
-            </div>
-            <div class="relative order-1 lg:order-2 h-full min-h-[400px]">
-                <div class="aspect-square bg-blue-600 rounded-[3rem] p-10 flex flex-col justify-end text-white relative overflow-hidden h-full shadow-2xl">
-                    <div class="absolute top-10 left-10 text-9xl font-black text-white/10 select-none">15+</div>
-                    <div class="space-y-2 relative z-10">
-                        <p class="text-4xl font-bold">Talented Engineers</p>
-                        <p class="text-blue-200">Building the future of business management software across Pakistan.</p>
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-900 mb-1">FinTech Logic</h4>
+                        <p class="text-xs text-slate-500">Automated ledgers & real-time reporting.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 px-6 bg-slate-50">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 space-y-4">
-                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Capabilities</h2>
-                <p class="text-4xl md:text-5xl font-black text-slate-900">Our Professional Services</p>
-                <p class="text-slate-500 max-w-2xl mx-auto text-lg">Comprehensive technology solutions tailored to your business vertical.</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- 1 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="monitor"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Website Development</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">High-performance MERN stack and Next.js applications.</p>
-                </div>
-                <!-- 2 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="layers"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Custom Software</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Bespoke digital solutions designed for your specific business.</p>
-                </div>
-                <!-- 3 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="zap"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Restaurant POS</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Smart management for dining, billing, and kitchen ops.</p>
-                </div>
-                <!-- 4 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="shopping-cart"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Mart & Shop Software</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Optimized inventory tracking for retail marts.</p>
-                </div>
-                <!-- 5 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="users"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Gym Management</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Member tracking, attendance, and fee management.</p>
-                </div>
-                <!-- 6 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-pink-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="database"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Accounts & Inventory</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Precise financial record-keeping and stock monitoring.</p>
-                </div>
-                <!-- 7 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="pen-tool"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">UI/UX Design</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Modern, user-centric interfaces designed for conversion.</p>
-                </div>
-                <!-- 8 -->
-                <div class="group p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-slow flex flex-col items-start">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-slate-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="settings"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Maintenance</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed">Ongoing 24/7 technical assistance and software updates.</p>
-                </div>
-            </div>
+    <!-- Detailed Services -->
+    <section id="services" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-20">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-blue-600 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-purple-600 rounded-full blur-[100px]"></div>
         </div>
-    </section>
 
-    <!-- Portfolio Section (All 7 Projects) -->
-    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div class="space-y-4">
-                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Portfolio</h2>
-                <p class="text-4xl md:text-5xl font-black text-slate-900">Our Successful Deployments</p>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 space-y-4" data-aos="fade-up">
+                <h2 class="text-blue-400 font-bold tracking-widest uppercase text-sm">Technical Arsenal</h2>
+                <p class="text-4xl md:text-5xl font-black">Advanced Capabilities</p>
             </div>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- P1 -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-blue-600">Latest / POS</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Sanober Restaurant</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">A premium management platform for fine dining and table reservations.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">POS</span>
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">MERN</span>
-                    </div>
-                </div>
-            </div>
-            <!-- P2 -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-indigo-600">Web Development</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Burger Blast</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Interactive food ordering platform with a seamless UI/UX experience.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">REACT</span>
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">FOOD TECH</span>
-                    </div>
-                </div>
-            </div>
-            <!-- P3 -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-emerald-600">Software</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Dropure Filter Shop</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Accounts and inventory management system for water purification shops.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">INVENTORY</span>
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">ACCOUNTS</span>
-                    </div>
-                </div>
-            </div>
-            <!-- P4 -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-purple-600">Management Software</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Gym Management System</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">End-to-end automation for fitness centers and member management portal.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">SAAS</span>
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">ADMIN</span>
-                    </div>
-                </div>
-            </div>
-            <!-- P5 -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-pink-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-pink-600">Utility Web</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Family Manager App</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">A digital organization tool for managing complex household tasks.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">UTILITY</span>
-                    </div>
-                </div>
-            </div>
-            <!-- P6 -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-orange-600">Enterprise</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Restaurant POS System</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">High-speed billing and kitchen management for busy food outlets.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">POS</span>
-                    </div>
-                </div>
-            </div>
-            <!-- P7 (Newest) -->
-            <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-blue-100 shadow-sm transition-slow flex flex-col lg:col-start-2">
-                <div class="h-48 bg-slate-100 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-slate-600/10 to-transparent"></div>
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-slate-600">Retail</div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition-colors">Shop Management System</h3>
-                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">General retail software for sales, stock, and staff management.</p>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-50">
-                        <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">SALES</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Why Choose Us -->
-    <section class="py-24 px-6 bg-slate-900 text-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="space-y-8">
-                    <h2 class="text-blue-400 font-bold tracking-widest uppercase text-sm">Value Proposition</h2>
-                    <p class="text-4xl md:text-5xl font-black">Why Choose <span class="text-blue-500">Meer</span> Enterprises?</p>
-                    <p class="text-slate-400 text-lg leading-relaxed">
-                        We blend technical mastery with deep business insight to deliver software that doesn't just look good, but works as hard as you do.
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service 1 -->
+                <div class="group p-8 bg-slate-800/50 backdrop-blur rounded-[2rem] border border-slate-700 hover:border-blue-500 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-700 flex items-center justify-center mb-6 text-blue-400">
+                        <i data-lucide="brain-circuit" size="28"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI & Machine Learning</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Predictive modeling using Random Forest & Logistic Regression. Time-series forecasting with Prophet for business insights.
                     </p>
-                    <div class="space-y-6 pt-4">
-                        <div class="flex gap-4 items-start group">
-                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i data-lucide="zap" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-xl">Business-Oriented Solutions</h4>
-                                <p class="text-slate-400 text-sm mt-1">We build tools that directly grow your revenue and efficiency.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start group">
-                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i data-lucide="cpu" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-xl">Modern Technologies</h4>
-                                <p class="text-slate-400 text-sm mt-1">Leveraging MERN stack and AI for future-proof applications.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start group">
-                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i data-lucide="message-square" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-xl">Reliable Support</h4>
-                                <p class="text-slate-400 text-sm mt-1">Our team of 15+ experts provides dedicated 24/7 assistance.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start group">
-                            <div class="mt-1 w-10 h-10 rounded-xl bg-blue-600/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i data-lucide="shield-check" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-xl">Clean & Secure Code</h4>
-                                <p class="text-slate-400 text-sm mt-1">Industry-standard security and highly maintainable architecture.</p>
-                            </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group p-8 bg-slate-800/50 backdrop-blur rounded-[2rem] border border-slate-700 hover:border-purple-500 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-700 flex items-center justify-center mb-6 text-purple-400">
+                        <i data-lucide="eye" size="28"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Computer Vision</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Face recognition security systems and gesture control interfaces using OpenCV and MediaPipe.
+                    </p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group p-8 bg-slate-800/50 backdrop-blur rounded-[2rem] border border-slate-700 hover:border-emerald-500 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-700 flex items-center justify-center mb-6 text-emerald-400">
+                        <i data-lucide="bar-chart-2" size="28"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Data Science (EDA)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Exploratory Data Analysis, Feature Engineering, and Statistical Analysis to identify key business drivers (Churn/Risk).
+                    </p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="group p-8 bg-slate-800/50 backdrop-blur rounded-[2rem] border border-slate-700 hover:border-orange-500 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-700 flex items-center justify-center mb-6 text-orange-400">
+                        <i data-lucide="layout" size="28"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">SaaS Architecture</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Building browser-based engines like Dropure FinTech for automated accounting and real-time reporting.
+                    </p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="group p-8 bg-slate-800/50 backdrop-blur rounded-[2rem] border border-slate-700 hover:border-pink-500 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-14 h-14 rounded-2xl bg-slate-700 flex items-center justify-center mb-6 text-pink-400">
+                        <i data-lucide="globe" size="28"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Full Stack Web</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Modern React.js and Django applications integrated with Google Maps API and serverless data handling.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience Timeline -->
+    <section id="experience" class="py-24 px-6 max-w-7xl mx-auto bg-white">
+        <div class="text-center mb-16 space-y-4">
+            <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Career Trajectory</h2>
+            <p class="text-4xl md:text-5xl font-black text-slate-900">Professional Journey</p>
+        </div>
+
+        <div class="relative border-l-2 border-slate-200 ml-4 md:ml-12 space-y-12">
+            <!-- Role 1 -->
+            <div class="relative pl-8 md:pl-12" data-aos="fade-right">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-600 ring-4 ring-white"></div>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                    <h3 class="text-xl font-bold text-slate-900">Founder & Lead Software Architect</h3>
+                    <span class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Feb 2026 – Present</span>
+                </div>
+                <p class="text-slate-500 font-medium mb-2">Meer Enterprises | Hyderabad, Sindh</p>
+                <p class="text-slate-600 text-sm max-w-3xl leading-relaxed">
+                    Founded a tech startup dedicated to Social Enterprise and SaaS solutions. Architected <strong>"Rizq-Chain"</strong>, an AI-powered logistics backbone, and <strong>"Dropure"</strong> FinTech Suite for automated accounting.
+                </p>
+            </div>
+
+            <!-- Role 2 -->
+            <div class="relative pl-8 md:pl-12" data-aos="fade-right" data-aos-delay="100">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 ring-4 ring-white"></div>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                    <h3 class="text-xl font-bold text-slate-900">Data Science Intern</h3>
+                    <span class="text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Dec 2025 – Present</span>
+                </div>
+                <p class="text-slate-500 font-medium mb-2">DevelopersHub Corporation | Remote (Islamabad)</p>
+                <p class="text-slate-600 text-sm max-w-3xl leading-relaxed">
+                    Engineered predictive models using Random Forest and Logistic Regression to predict Customer Churn and Loan Eligibility with <strong>>85% accuracy</strong>. Conducted rigorous EDA on complex datasets.
+                </p>
+            </div>
+
+            <!-- Role 3 -->
+            <div class="relative pl-8 md:pl-12" data-aos="fade-right" data-aos-delay="200">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 ring-4 ring-white"></div>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                    <h3 class="text-xl font-bold text-slate-900">Python Developer Intern</h3>
+                    <span class="text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Jan 2026 – Present</span>
+                </div>
+                <p class="text-slate-500 font-medium mb-2">Hashim School of IT | Hyderabad, Sindh</p>
+                <p class="text-slate-600 text-sm max-w-3xl leading-relaxed">
+                    Prototyped a Face Recognition Security System and a Hand-Gesture Brightness Control interface using <strong>MediaPipe and OpenCV</strong>. Developed Python scripts for automation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Projects Portfolio -->
+    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto bg-slate-50">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div class="space-y-4" data-aos="fade-right">
+                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm">Our Portfolio</h2>
+                <p class="text-4xl md:text-5xl font-black text-slate-900">Signature Projects</p>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Project 1: Rizq-Chain -->
+            <div class="group cursor-pointer flex flex-col h-full" data-aos="fade-up" data-aos-delay="0">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200 bg-white aspect-[4/3] mb-6 group-hover:shadow-2xl transition-all">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-green-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">Flagship</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rizq Chain" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6">
+                        <div class="text-white">
+                            <p class="font-bold text-lg">Rizq-Chain: Logistics of Compassion</p>
+                            <p class="text-xs text-slate-300 mt-1">Django, Google Maps, AI Routing</p>
                         </div>
                     </div>
                 </div>
-                <div class="relative">
-                    <div class="bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-[3rem] p-12 aspect-square flex flex-col justify-center items-center text-center shadow-2xl">
-                        <div class="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20">
-                            <p class="text-6xl font-black mb-2">99%</p>
-                            <p class="text-blue-100 font-bold uppercase tracking-wider">Client Satisfaction</p>
-                        </div>
-                        <div class="mt-12 grid grid-cols-2 gap-8 w-full">
-                            <div class="text-center border-r border-white/10">
-                                <p class="text-3xl font-bold">50+</p>
-                                <p class="text-blue-200 text-[10px] uppercase font-bold mt-1 tracking-widest">Projects Done</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-3xl font-bold">24/7</p>
-                                <p class="text-blue-200 text-[10px] uppercase font-bold mt-1 tracking-widest">Support</p>
-                            </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 flex-1">
+                    <p class="text-slate-600 text-sm mb-4">A digital ecosystem targeting a <strong>40% reduction</strong> in local food waste. Connects donors with beneficiaries via optimized driver routes.</p>
+                </div>
+            </div>
+
+            <!-- Project 2: Dropure FinTech -->
+            <div class="group cursor-pointer flex flex-col h-full" data-aos="fade-up" data-aos-delay="100">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200 bg-white aspect-[4/3] mb-6 group-hover:shadow-2xl transition-all">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-blue-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">FinTech</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dropure" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6">
+                        <div class="text-white">
+                            <p class="font-bold text-lg">Dropure FinTech Suite</p>
+                            <p class="text-xs text-slate-300 mt-1">SaaS, Accounting Engine</p>
                         </div>
                     </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 flex-1">
+                    <p class="text-slate-600 text-sm mb-4">Browser-based accounting engine for water filtration businesses. Automates <strong>Journal Entries, Ledgers, and Trial Balances</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Project 3: SolarSmart -->
+            <div class="group cursor-pointer flex flex-col h-full" data-aos="fade-up" data-aos-delay="200">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200 bg-white aspect-[4/3] mb-6 group-hover:shadow-2xl transition-all">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-orange-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">BI Dashboard</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SolarSmart" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6">
+                        <div class="text-white">
+                            <p class="font-bold text-lg">SolarSmart Intelligence</p>
+                            <p class="text-xs text-slate-300 mt-1">Business Intelligence, Real-time P/L</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 flex-1">
+                    <p class="text-slate-600 text-sm mb-4">Deployed a BI dashboard for solar inventory management, featuring real-time Profit/Loss visualization and stock alert systems.</p>
+                </div>
+            </div>
+
+            <!-- Project 4: Computer Vision -->
+            <div class="group cursor-pointer flex flex-col h-full" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200 bg-white aspect-[4/3] mb-6 group-hover:shadow-2xl transition-all">
+                     <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-purple-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">AI / Vision</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Computer Vision" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6">
+                        <div class="text-white">
+                            <p class="font-bold text-lg">Vision Security System</p>
+                            <p class="text-xs text-slate-300 mt-1">OpenCV, MediaPipe, Python</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 flex-1">
+                    <p class="text-slate-600 text-sm mb-4">Face Recognition Security System and Hand-Gesture Brightness Control interface. Advanced prototypes for touchless interaction.</p>
+                </div>
+            </div>
+
+             <!-- Project 5: Sales Dashboards -->
+             <div class="group cursor-pointer flex flex-col h-full" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg border border-slate-200 bg-white aspect-[4/3] mb-6 group-hover:shadow-2xl transition-all">
+                     <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-indigo-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider">Analytics</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sales Dashboard" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6">
+                        <div class="text-white">
+                            <p class="font-bold text-lg">Sales Intelligence</p>
+                            <p class="text-xs text-slate-300 mt-1">React.js, Recharts, LocalStorage</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 flex-1">
+                    <p class="text-slate-600 text-sm mb-4">High-performance dashboards (Sales Analytics, Gym Management) visualizing KPIs and revenue trends without backend databases.</p>
                 </div>
             </div>
         </div>
@@ -399,64 +566,54 @@
 
     <!-- Contact Section -->
     <section id="contact" class="py-24 px-6 max-w-7xl mx-auto">
-        <div class="bg-slate-50 rounded-[3rem] p-8 md:p-16 border border-slate-100 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="bg-slate-900 rounded-[3rem] p-8 md:p-16 shadow-2xl relative overflow-hidden text-white">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600 rounded-full blur-[120px] -mr-32 -mt-32 opacity-50"></div>
             
             <div class="grid lg:grid-cols-2 gap-16 relative z-10">
                 <div class="space-y-8">
-                    <h2 class="text-4xl md:text-5xl font-black text-slate-900">Let's Build Something <span class="text-blue-600">Great</span></h2>
-                    <p class="text-slate-600 text-lg">Ready to automate your shop or launch your next web project? Our team is standing by.</p>
+                    <h2 class="text-4xl md:text-5xl font-black">Let's Build Something <span class="text-blue-500">Intelligent</span></h2>
+                    <p class="text-slate-300 text-lg">Whether it's AI-driven logistics or a custom SaaS platform, Meer Enterprises delivers scalable innovation.</p>
                     
-                    <div class="space-y-6">
-                        <a href="mailto:muhammadusamaenterprises@gmail.com" class="flex items-center gap-5 p-6 bg-white rounded-3xl border border-slate-100 hover:border-blue-200 transition-slow shadow-sm group">
-                            <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i data-lucide="mail"></i>
-                            </div>
+                    <div class="space-y-4">
+                        <a href="mailto:muhammadusamaenterprises@gmail.com" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10">
+                            <div class="bg-blue-600 p-3 rounded-xl"><i data-lucide="mail"></i></div>
                             <div>
-                                <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">Send an Email</p>
-                                <p class="text-lg font-bold text-slate-900">muhammadusamaenterprises@gmail.com</p>
+                                <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Email Us</p>
+                                <p class="font-bold">muhammadusamaenterprises@gmail.com</p>
                             </div>
                         </a>
-                        <div class="flex items-center gap-5 p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
-                            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
-                                <i data-lucide="phone"></i>
-                            </div>
+                        <a href="https://wa.me/923197921318" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/10">
+                            <div class="bg-green-600 p-3 rounded-xl"><i data-lucide="phone"></i></div>
                             <div>
-                                <p class="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-1">Contact Sales</p>
-                                <p class="text-lg font-bold text-slate-900">+92 319 7921318</p>
+                                <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">WhatsApp/Call</p>
+                                <p class="font-bold">+92 319 7921318</p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
-                <div class="bg-white p-8 md:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
-                    <form class="space-y-6" onsubmit="event.preventDefault();">
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
-                                <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="John Doe">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email</label>
-                                <input type="email" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all" placeholder="john@company.com">
-                            </div>
+                <div class="bg-white text-slate-900 p-8 rounded-[2rem]">
+                    <form class="space-y-5" onsubmit="event.preventDefault();">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Name</label>
+                            <input type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200" placeholder="John Doe">
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Project Category</label>
-                            <select class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all appearance-none cursor-pointer">
-                                <option>Mart/Shop POS Software</option>
-                                <option>Restaurant Management</option>
-                                <option>MERN Stack Website</option>
-                                <option>Gym Management</option>
-                                <option>Custom Software</option>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Service Required</label>
+                            <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500">
+                                <option>AI & Machine Learning Model</option>
+                                <option>Custom SaaS / FinTech App</option>
+                                <option>Computer Vision Solution</option>
+                                <option>Data Science / Analytics</option>
+                                <option>Web Development</option>
                             </select>
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Your Message</label>
-                            <textarea class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 h-32 focus:outline-none focus:border-blue-500 focus:bg-white transition-all resize-none" placeholder="Tell us about your requirements..."></textarea>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Project Details</label>
+                            <textarea class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 h-32 resize-none focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200" placeholder="Describe your project requirements..."></textarea>
                         </div>
-                        <button class="w-full bg-blue-600 hover:bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2">
-                            Launch Project <i data-lucide="zap" size="18"></i>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2">
+                            Initialize Project <i data-lucide="send" size="18"></i>
                         </button>
                     </form>
                 </div>
@@ -465,56 +622,50 @@
     </section>
 
     <!-- Footer -->
-    <footer class="pt-24 pb-12 px-6 max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-4 gap-12 border-b border-slate-100 pb-16 mb-12 text-center md:text-left">
-            <div class="col-span-2 space-y-6">
-                <div class="flex items-center justify-center md:justify-start gap-2">
-                    <div class="bg-blue-600 p-1.5 rounded-lg text-white">
-                        <i data-lucide="code" size="16"></i>
-                    </div>
+    <footer class="bg-white border-t border-slate-100 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-3">
+                    <img src="E:\ChatGPT Image Jan 31, 2026, 07_18_49 PM.png" alt="Meer Enterprises" class="h-8 w-auto">
                     <span class="text-xl font-bold tracking-tight text-slate-900">
                         MEER <span class="text-blue-600">ENTERPRISES</span>
                     </span>
                 </div>
-                <p class="text-slate-500 max-w-sm mx-auto md:mx-0">Building smart, scalable, and secure software solutions for businesses in Hyderabad and beyond.</p>
+                <div class="flex gap-6 text-slate-600">
+                    <a href="#" class="hover:text-blue-600 transition-colors"><i data-lucide="github"></i></a>
+                    <a href="#" class="hover:text-blue-600 transition-colors"><i data-lucide="linkedin"></i></a>
+                    <a href="https://wa.me/923197921318" class="hover:text-green-600 transition-colors"><i data-lucide="message-circle"></i></a>
+                </div>
             </div>
-            <div class="space-y-6">
-                <h4 class="font-black uppercase tracking-widest text-[10px] text-slate-900">Contact</h4>
-                <ul class="space-y-4 text-slate-500 text-sm">
-                    <li>Hyderabad, Sindh, PK</li>
-                    <li>+92 319 7921318</li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-black uppercase tracking-widest text-[10px] text-slate-900">Legal</h4>
-                <ul class="space-y-4 text-slate-500 text-sm font-bold uppercase tracking-widest text-[10px]">
-                    <li><a href="#" class="hover:text-blue-600 transition-colors">Privacy</a></li>
-                    <li><a href="#" class="hover:text-blue-600 transition-colors">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-            <p>&copy; 2026 MEER Enterprises. Built by Muhammad Usama.</p>
-            <div class="flex items-center gap-6">
-                <span class="flex items-center gap-2"><i data-lucide="check-circle" size="14" class="text-emerald-500"></i> Secure</span>
-                <span class="flex items-center gap-2"><i data-lucide="check-circle" size="14" class="text-emerald-500"></i> Scalable</span>
+            <div class="text-center text-slate-400 text-sm font-medium border-t border-slate-100 pt-8">
+                &copy; 2026 Meer Enterprises. Built by Muhammad Usama Noonari. <br class="md:hidden"> Hyderabad, Sindh.
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize Lucide Icons
+        // Initialize Animations
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // Initialize Icons
         lucide.createIcons();
 
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                navbar.classList.add('glass', 'shadow-sm', 'py-3');
-                navbar.classList.remove('py-5');
+                navbar.classList.add('glass', 'shadow-sm', 'py-4');
+                navbar.classList.remove('py-4'); // Remove padding reduction here, keep consistent or adjust
             } else {
-                navbar.classList.remove('glass', 'shadow-sm', 'py-3');
-                navbar.classList.add('py-5');
+                navbar.classList.remove('glass', 'shadow-sm', 'py-4');
+                navbar.classList.add('py-4');
             }
         });
 
@@ -523,7 +674,77 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
+
+        // --- AI Chatbot Logic ---
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.classList.toggle('hidden');
+            if (!chatWindow.classList.contains('hidden')) {
+                document.getElementById('chat-input').focus();
+            }
+        }
+
+        const knowledgeBase = {
+            default: "I am a simple AI for Meer Enterprises. You can ask me about our <b>Founder</b>, <b>Services</b>, <b>Projects</b>, or <b>Contact</b> info.",
+            founder: "Our Founder is <b>Muhammad Usama Noonari</b>, an AI Engineer and Full Stack Architect based in Hyderabad, Sindh. He specializes in connecting AI with Web Solutions.",
+            services: "We offer: <br>• <b>AI & ML</b> (Prediction Models)<br>• <b>Computer Vision</b> (Security/Gesture)<br>• <b>SaaS/FinTech</b> Apps<br>• <b>Data Science</b> Analysis.",
+            projects: "Signature Projects include:<br>• <b>Rizq-Chain</b> (Logistics/Social Good)<br>• <b>Dropure</b> (FinTech/Accounting)<br>• <b>SolarSmart</b> (BI Dashboard).",
+            contact: "Email: <a href='mailto:muhammadusamaenterprises@gmail.com' class='text-blue-600 underline'>muhammadusamaenterprises@gmail.com</a><br>WhatsApp: +92 319 7921318.",
+            location: "We are based in Hyderabad, Sindh, Pakistan.",
+            tech: "Our arsenal includes Python, Django, React.js, OpenCV, Scikit-Learn, and Node.js."
+        };
+
+        function getBotResponse(input) {
+            input = input.toLowerCase();
+            if (input.includes("founder") || input.includes("owner") || input.includes("usama")) return knowledgeBase.founder;
+            if (input.includes("service") || input.includes("offer") || input.includes("do")) return knowledgeBase.services;
+            if (input.includes("project") || input.includes("work") || input.includes("portfolio") || input.includes("rizq") || input.includes("dropure")) return knowledgeBase.projects;
+            if (input.includes("contact") || input.includes("email") || input.includes("phone") || input.includes("whatsapp")) return knowledgeBase.contact;
+            if (input.includes("location") || input.includes("where") || input.includes("city")) return knowledgeBase.location;
+            if (input.includes("tech") || input.includes("stack") || input.includes("code")) return knowledgeBase.tech;
+            if (input.includes("hi") || input.includes("hello")) return "Hello there! How can I help you today?";
+            return knowledgeBase.default;
+        }
+
+        function handleChat(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('chat-input');
+            const messageArea = document.getElementById('chat-messages');
+            const userText = inputField.value.trim();
+
+            if (!userText) return;
+
+            // Add User Message
+            const userDiv = document.createElement('div');
+            userDiv.className = "flex gap-2 justify-end message-anim";
+            userDiv.innerHTML = `
+                <div class="bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow-sm max-w-[80%]">
+                    ${userText}
+                </div>
+            `;
+            messageArea.appendChild(userDiv);
+            
+            // Clear input
+            inputField.value = '';
+            messageArea.scrollTop = messageArea.scrollHeight;
+
+            // Simulate AI Delay
+            setTimeout(() => {
+                const botResponse = getBotResponse(userText);
+                const botDiv = document.createElement('div');
+                botDiv.className = "flex gap-2 message-anim";
+                botDiv.innerHTML = `
+                    <div class="w-6 h-6 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white text-[10px] mt-1"><i data-lucide="bot" size="12"></i></div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-sm text-slate-600 shadow-sm max-w-[85%]">
+                        ${botResponse}
+                    </div>
+                `;
+                messageArea.appendChild(botDiv);
+                // Re-init icons for the new message
+                lucide.createIcons();
+                messageArea.scrollTop = messageArea.scrollHeight;
+            }, 600);
+        }
     </script>
 </body>
-
 </html>
